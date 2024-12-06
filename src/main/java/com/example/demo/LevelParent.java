@@ -73,11 +73,24 @@ public abstract class LevelParent extends Observable {
 		timeline.play();
 	}
 
-	public void goToNextLevel(String levelName) {
+	public void stopGame() {
 		timeline.stop();
-		setChanged();
-		notifyObservers(levelName);
+		root.getChildren().clear();
+        friendlyUnits.clear();
+        enemyUnits.clear();
+		userProjectiles.clear();
+		enemyProjectiles.clear();
 	}
+
+    protected void goToNextLevel(String levelName) {
+        try {
+            stopGame();
+            setChanged();
+            notifyObservers(levelName);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 	private void updateScene() {
 		spawnEnemyUnits();
